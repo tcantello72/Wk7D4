@@ -1,28 +1,18 @@
 import { useState } from "react";
 
-// 18. Change the props to reflect the new prop being sent
-function Form({ setNewPost }) {
+function Form({ data, setData }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [time, setTime] = useState("");
 
-  async function submitHandler(e) {
+  function submitHandler(e) {
     e.preventDefault();
     const newTodo = {
       title,
       description,
       time,
     };
-    // 13. Change the submit handler to make a post request to http://localhost:3000/todo instead of setting the data state
-    await fetch("http://localhost:3000/todo", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newTodo),
-    });
-    // 14. Demonstrate that even though you're adding to the db, the list is only updating if you refresh the page
-
-    // 19. In the submit handler, after the fetch request is complete, set the new state value to true and demonstrate the live reload of the todo list
-    setNewPost(true);
+    setData([...data, newTodo]);
     setTitle("");
     setDescription("");
     setTime("");
