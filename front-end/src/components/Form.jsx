@@ -1,18 +1,24 @@
 import { useState } from "react";
 
-function Form({ data, setData }) {
+function Form({ setNewPost }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [time, setTime] = useState("");
 
-  function submitHandler(e) {
+  async function submitHandler(e) {
     e.preventDefault();
     const newTodo = {
       title,
       description,
       time,
     };
-    setData([...data, newTodo]);
+    await fetch("http://localhost:3000/todo", {
+      method: "POST",
+      headers: {"Content-type" : "application/json"},
+      body: JSON.stringify(newTodo)
+    });
+
+    setNewPost(true)
     setTitle("");
     setDescription("");
     setTime("");
